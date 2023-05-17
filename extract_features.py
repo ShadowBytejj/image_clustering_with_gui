@@ -1,6 +1,9 @@
 import os
 from src.utils.config import get_config_from_json
 from src.models.feature_extractor import run_inference_on_images_feature
+import os
+import sys
+import time
 
 IMAGE_EXTENSION = ('jpg', 'jpeg', 'bmp', 'png')
 
@@ -16,8 +19,24 @@ def extract_feature(img_dir, model_dir, output_dir):
     # Get list of image paths
     img_list = [os.path.join(img_dir, img_file) for img_file in os.listdir(img_dir) if img_file.endswith(IMAGE_EXTENSION)]
 
+    if getattr(sys, 'frozen', False):
+        application_path = os.path.dirname(sys.executable)
+    else:
+        application_path = os.path.dirname(__file__)
+
+    cmd3 = "python " + os.path.join(application_path, "find_k.py")
+    cmd4 = "python " + os.path.join(application_path, "run_k_mean.py")
+
     # Run getting feature vectors for each image
-    run_inference_on_images_feature(img_list, model_dir, output_dir)
+
+    #############batch by batch
+    for i in range(0,len(img_list),50):
+        run_inference_on_images_feature(img_list[i:i+5], model_dir, output_dir)
+        print("Step3: find k value")
+        os.system(cmd3)
+        print("Step4: run k mean algorithm")
+        os.system(cmd4)
+
 
 if __name__ == "__main__":
     # Get config
