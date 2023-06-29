@@ -47,9 +47,9 @@ if __name__ == "__main__":
 
     # Read feature vector from vector dir
     vector_array, vector_files = read_vector(vector_dir)
-    print("before : ",vector_array)
+    # print("before : ",vector_array)
     # Apply dimensional reducing approach
     vector_array = reduce_dim_combine(vector_array, dim=dim)#会报错
-    print("after: ",vector_array)
+    # print("after: ",vector_array)
     # Find best K
     find_k(vector_array, save_plot_dir, dim=dim)
