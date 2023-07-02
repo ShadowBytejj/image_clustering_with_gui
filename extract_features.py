@@ -52,6 +52,19 @@ class FeatureExtractionThread(QThread):
         self.output_dir = output_dir
 
     def run(self):
+        #modify k
+        import json
+        with open("configs/configs.json", 'r') as f:
+            config = json.load(f)
+
+        config['model']['k'] = 3
+
+        # 将更改保存回 JSON 文件
+        with open("configs/configs.json", 'w') as f:
+            json.dump(config, f, indent=4)
+
+
+
         img_dir = self.img_dir.encode('ascii').decode('utf-8')
         model_dir = self.model_dir.encode('ascii').decode('utf-8')
         output_dir = self.output_dir.encode('ascii').decode('utf-8')

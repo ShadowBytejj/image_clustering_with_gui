@@ -1,5 +1,5 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL']= '2' #否则会有warning让你用VXAX(好像是)，用这个隐藏了。
+os.environ['TF_CPP_MIN_LOG_LEVEL']= '2'
 import re
 import sys
 import tarfile
@@ -151,7 +151,10 @@ def run_inference_on_images_feature(image_list, model_dir, output_dir):
         # 'DecodeJpeg/contents:0': A tensor containing a string providing JPEG
         #   encoding of the image.
         # Runs the softmax tensor by feeding the image_data as input to the graph.
-        softmax_tensor = sess.graph.get_tensor_by_name('softmax:0')
+
+
+
+        # softmax_tensor = sess.graph.get_tensor_by_name('softmax:0')
 
         for image_index, image in enumerate(image_list):
             try:
@@ -178,12 +181,12 @@ def run_inference_on_images_feature(image_list, model_dir, output_dir):
                 proc = psutil.Process()
                 open_files = proc.open_files()
                 #print("测试6")
-                for open_file in open_files:
-                    file_handler = getattr(open_file, "fd")
+                # for open_file in open_files:
+                #     file_handler = getattr(open_file, "fd")
                     # print("测试测试",file_handler)
-                    os.close(file_handler)#这里错了吧 原先是os.close(file_handler)
+                    # os.close(file_handler)#这里错了吧 原先是os.close(file_handler)
                     #但是这里只是为了关闭文件，output的vector已经生成了
-                    print("Successfully process")
+                    # print("Successfully process")
             except:
                 # print('process image index', image_index, 'image', image)
                 pass

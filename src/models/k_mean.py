@@ -92,27 +92,15 @@ def find_best_k(vector_array, save_plot_dir, max_k=100):#这里本来设置为10
             min_diff = abs(cost[-2]-cost[-1])
             min_diff_k = i
 
-            # diff.append(abs(cost[-2]-cost[-1]))
-        # else:
-        #     min_diff = cost[-1]
-    print('cost:::::::::::::::::::\n',cost)
-    print('find min_diff:::::::::::::::::::::\n',min_diff)
-    print('k value:',min_diff_k)
-    # print('difffffffffffffff\n',diff)
-    # plot the cost against K values
     plt.plot(range(1, max_k), cost, color='g', linewidth='3')
     plt.xlabel("Value of K")
     plt.ylabel("Squared Error (Cost)")
     plt.savefig(save_plot_dir + '/cost_' + str(dim) + 'D.png')
     plt.close()
-
     import json
-
-    # 打开 JSON 文件并加载内容
     with open("configs/configs.json", 'r') as f:
         config = json.load(f)
 
-    # 修改 k 的值
     config['model']['k'] = min_diff_k
 
     # 将更改保存回 JSON 文件
