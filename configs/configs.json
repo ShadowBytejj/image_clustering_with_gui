@@ -12,6 +12,6 @@
         "object_name": "example",
         "mode": "analysis",
         "reduced_dimension": 2,
-        "k": 3
+        "k": 4
     }
 }

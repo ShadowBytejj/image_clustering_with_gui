@@ -5,7 +5,6 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import sys
 import os
-from main import run_function
 import math
 from src.utils.config import get_config_from_json
 from extract_features import FeatureExtractionThread
@@ -388,29 +387,21 @@ class ImageViewer(QMainWindow):
                 os.remove(img)
 
             self.show_cluster()
-
-
-
     def cluster_change_layout(self):
 
+
         while self.hlayout.count() > 0:
+            print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
             item = self.hlayout.takeAt(0)
             widget = item.widget()
             self.hlayout.removeWidget(widget)
             widget.deleteLater()
 
-        self.cluster_button_vlayout = QVBoxLayout()
-
-        self.cluster_button_hlayout = QHBoxLayout()
-
-        self.cluster_button_vlayout.addLayout(self.cluster_button_hlayout)
-        
-        # print(self.cluster_list)
-        # self.hlayout = QHBoxLayout()
-        for i,dir in enumerate(self.cluster_list):
-            print('i,dir::::::',i,dir)
+        self.hlayout = QHBoxLayout()
+        for i, dir in enumerate(self.cluster_list):
+            print('i,dir::::::', i, dir)
             cluster_button_text = dir.split("\\")[3]
-            button_img = QPixmap(os.path.join(dir,os.listdir(dir)[0]))
+            button_img = QPixmap(os.path.join(dir, os.listdir(dir)[0]))
             # button_img = QPixmap('C:/Users/朱启津/Desktop/Album\\TEST1\\COCO_train2014_000000000575.jpg')
 
             cluster_button = QPushButton()
@@ -422,17 +413,74 @@ class ImageViewer(QMainWindow):
 
             cluster_button.clicked.connect(lambda checked, idx=i: self.change_cluster(idx))
             # print("connect")
-            self.cluster_button_hlayout.addWidget(cluster_button)
+            # self.cluster_button_hlayout.addWidget(cluster_button)
 
-            if (i + 1) % 10 == 0:
-                self.cluster_button_hlayout = QHBoxLayout()
-                self.cluster_button_vlayout.addLayout(self.cluster_button_hlayout)
+            # if (i + 1) % 10 == 0:
+            #     self.cluster_button_hlayout = QHBoxLayout()
+            #     self.cluster_button_vlayout.addLayout(self.cluster_button_hlayout)
 
-        self.w1.addLayout(self.cluster_button_vlayout)
-            # self.hlayout.addWidget(cluster_button)
+        # self.w1.addLayout(self.cluster_button_vlayout)
+        # self.w1.addLayout(self.cluster_button_hlayout)
 
 
-        # self.w1.addLayout(self.hlayout)
+            self.hlayout.addWidget(cluster_button)
+
+        self.w1.addLayout(self.hlayout)
+
+    # def cluster_change_layout(self):
+    #
+    #     try:
+    #         while self.cluster_button_vlayout.count() > 0:
+    #             print('reprint::::::::::::::::::::::',self.cluster_button_vlayout.count())
+    #             item = self.cluster_button_vlayout.takeAt(0)
+    #             widget = item.widget()
+    #             self.cluster_button_vlayout.removeWidget(widget)
+    #             widget.deleteLater()
+    #             print('reprint::::::::::::::::::::::')
+    #     except:
+    #         pass
+    #     # try:
+    #     #     if self.cluster_button_vlayout.count():
+    #     #         button_item = self.cluster_button_vlayout.takeAt(0)
+    #     #         if button_item.widget():
+    #     #             button_item.widget().deleteLater()
+    #     # except:
+    #     #     pass
+    #
+    #     self.cluster_button_vlayout = QVBoxLayout()
+    #
+    #     self.cluster_button_hlayout = QHBoxLayout()
+    #
+    #     self.cluster_button_vlayout.addLayout(self.cluster_button_hlayout)
+    #
+    #     # print(self.cluster_list)
+    #     # self.hlayout = QHBoxLayout()
+    #     for i,dir in enumerate(self.cluster_list):
+    #         # print('i,dir::::::',i,dir)
+    #         cluster_button_text = dir.split("\\")[3]
+    #         button_img = QPixmap(os.path.join(dir,os.listdir(dir)[0]))
+    #         # button_img = QPixmap('C:/Users/朱启津/Desktop/Album\\TEST1\\COCO_train2014_000000000575.jpg')
+    #
+    #         cluster_button = QPushButton()
+    #         cluster_button.setText(cluster_button_text)
+    #         cluster_button.setIcon(QIcon(button_img))
+    #         cluster_button.setIconSize(cluster_button.sizeHint())
+    #
+    #         # 调整按钮大小以适应图像和文本
+    #
+    #         cluster_button.clicked.connect(lambda checked, idx=i: self.change_cluster(idx))
+    #         # print("connect")
+    #         self.cluster_button_hlayout.addWidget(cluster_button)
+    #
+    #         if (i + 1) % 10 == 0:
+    #             self.cluster_button_hlayout = QHBoxLayout()
+    #             self.cluster_button_vlayout.addLayout(self.cluster_button_hlayout)
+    #
+    #     self.w1.addLayout(self.cluster_button_vlayout)
+    #         # self.hlayout.addWidget(cluster_button)
+    #
+    #
+    #     # self.w1.addLayout(self.hlayout)
 
     def change_cluster(self,dir_index):
 

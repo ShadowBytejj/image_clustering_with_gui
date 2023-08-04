@@ -86,7 +86,7 @@ class FeatureExtractionThread(QThread):
         print('cmd', cmd3,cmd4)
 
 
-        batch_num = 200
+        batch_num = 50
 
         for i in range(0, len(img_list), batch_num):
             end = (i+batch_num)
